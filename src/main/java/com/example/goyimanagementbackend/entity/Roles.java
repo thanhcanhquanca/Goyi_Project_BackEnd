@@ -2,7 +2,11 @@ package com.example.goyimanagementbackend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "Roles")
@@ -23,4 +27,12 @@ public class Roles {
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "role_permission",
+            joinColumns = @JoinColumn(name = "roleid"),
+            inverseJoinColumns = @JoinColumn(name = "permissionid")
+    )
+    private Set<Permissions> permissions = new HashSet<>();
 }
