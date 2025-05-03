@@ -1,0 +1,10 @@
+package com.example.goyimanagementbackend.eNum;
+
+ 
+public enum CopyrightClaimStatus {
+    PENDING,       // Đang chờ xử lý
+    UNDER_REVIEW,  // Đang xem xét
+    APPROVED,      // Đã chấp nhận
+    REJECTED,      // Đã từ chối
+    RESOLVED       // Đã giải quyết
+}

@@ -1,0 +1,7 @@
+package com.example.goyimanagementbackend.dto;
+
+import lombok.Data;
+
+Role
+public class Role {
+}

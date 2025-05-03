@@ -1,0 +1,33 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "CommentReports")
+@Data
+public class CommentReports {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer reportId;
+
+    @ManyToOne
+    @JoinColumn(name = "CommentID", nullable = false)
+    private PostComments comment;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", nullable = false)
+    private Users user;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String reportReason;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Pending', 'Reviewed', 'Resolved') DEFAULT 'Pending'")
+    private String status;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
+}

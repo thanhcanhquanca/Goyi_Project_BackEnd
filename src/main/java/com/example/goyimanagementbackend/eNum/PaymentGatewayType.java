@@ -1,0 +1,8 @@
+package com.example.goyimanagementbackend.eNum;
+
+public enum PaymentGatewayType {
+    ATM,        // Thanh toán qua ATM
+    MOMO,       // Thanh toán qua MoMo
+    BANK_API,   // Thanh toán qua API ngân hàng
+    OTHER       // Phương thức khác
+}

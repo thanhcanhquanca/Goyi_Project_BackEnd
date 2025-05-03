@@ -1,0 +1,36 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "AdPlacements")
+@Data
+public class AdPlacements {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer placementId;
+
+    @ManyToOne
+    @JoinColumn(name = "CampaignID", nullable = false)
+    private AdCampaigns campaign;
+
+    @ManyToOne
+    @JoinColumn(name = "LocationID")
+    private AdDisplayLocations location;
+
+    @ManyToOne
+    @JoinColumn(name = "VideoID")
+    private Videos video;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime displayStart;
+
+    private LocalDateTime displayEnd;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Active', 'Inactive') DEFAULT 'Inactive'")
+    private String status;
+}

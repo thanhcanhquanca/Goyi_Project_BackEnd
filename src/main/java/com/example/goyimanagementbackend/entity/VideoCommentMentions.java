@@ -1,0 +1,26 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "VideoCommentMentions")
+@Data
+public class VideoCommentMentions {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer mentionId;
+
+    @ManyToOne
+    @JoinColumn(name = "CommentID", nullable = false)
+    private VideoComments comment;
+
+    @ManyToOne
+    @JoinColumn(name = "MentionedUserID", nullable = false)
+    private Users mentionedUser;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
+}

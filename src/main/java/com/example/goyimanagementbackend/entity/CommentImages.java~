@@ -1,0 +1,27 @@
+package com.example.goyimanagementbackend.entity;
+ 
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "CommentImages")
+@Data
+public class CommentImages {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer imageId;
+
+    @ManyToOne
+    @JoinColumn(name = "CommentID", nullable = false)
+    private PostComments comment;
+
+    @Column(nullable = false, length = 255)
+    private String imageUrl;
+
+    @Column(columnDefinition = "TEXT")
+    private String caption;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
+}

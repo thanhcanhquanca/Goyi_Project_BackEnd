@@ -1,0 +1,30 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "VideoCommentReactions")
+@Data
+public class VideoCommentReactions {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer reactionId;
+
+    @ManyToOne
+    @JoinColumn(name = "CommentID", nullable = false)
+    private VideoComments comment;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", nullable = false)
+    private Users user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Like', 'Love', 'Haha', 'Wow', 'Sad', 'Angry')", nullable = false)
+    private String reactionType;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
+}

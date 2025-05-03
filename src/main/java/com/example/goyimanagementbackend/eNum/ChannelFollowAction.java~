@@ -1,0 +1,7 @@
+package com.example.goyimanagementbackend.eNum;
+
+ 
+public enum ChannelFollowAction {
+    FOLLOW,    // Người dùng theo dõi kênh
+    UNFOLLOW   // Người dùng hủy theo dõi kênh
+}

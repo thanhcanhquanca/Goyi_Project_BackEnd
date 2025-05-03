@@ -1,4 +1,0 @@
-package com.example.goyimanagementbackend.entity;
-
-public class User {
-}

@@ -1,0 +1,40 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "PostComments")
+@Data
+public class PostComments {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer commentId;
+
+    @ManyToOne
+    @JoinColumn(name = "PostID", nullable = false)
+    private Posts post;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID")
+    private Users user;
+
+    @ManyToOne
+    @JoinColumn(name = "ParentCommentID")
+    private PostComments parentComment;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String commentText;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Active', 'Deleted', 'Hidden') DEFAULT 'Active'")
+    private String status;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private LocalDateTime updatedAt;
+}

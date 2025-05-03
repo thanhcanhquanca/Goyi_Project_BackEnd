@@ -1,0 +1,9 @@
+package com.example.goyimanagementbackend.eNum;
+
+ 
+public enum AdminAdTargetLocation {
+    HOMEPAGE,    // Hiển thị ở trang chủ
+    VIDEO_PAGE,  // Hiển thị ở trang video
+    POST_PAGE,   // Hiển thị ở trang bài viết
+    SIDEBAR      // Hiển thị ở thanh bên
+}

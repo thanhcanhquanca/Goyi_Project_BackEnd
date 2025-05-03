@@ -1,0 +1,32 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "UserSubscriptions")
+@Data
+public class UserSubscriptions {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer subscriptionId;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", nullable = false)
+    private Users user;
+
+    @ManyToOne
+    @JoinColumn(name = "PlanID", nullable = false)
+    private SubscriptionPlans plan;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime startDate;
+
+    private LocalDateTime endDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Active', 'Expired', 'Cancelled') DEFAULT 'Active'")
+    private String status;
+}

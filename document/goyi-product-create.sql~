@@ -768,16 +768,3 @@ CREATE TABLE wallet_transactions (
 );
 
 
-CREATE TABLE video_progress (
-                                progress_id INT NOT NULL AUTO_INCREMENT,
-                                watch_time INT, -- Thời điểm hiện tại của video (giây)
-                                duration INT, -- Tổng thời lượng video (giây)
-                                is_completed BIT, -- Trạng thái hoàn thành (0: chưa hoàn thành, 1: đã hoàn thành)
-                                last_watched TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Thời điểm xem gần nhất
-                                video_quality ENUM('AUTO', 'P_240', 'P_360', 'P_480', 'P_720', 'P_1080', 'P_4K') NOT NULL, -- Chất lượng video
-                                userid INT NOT NULL, -- ID của người dùng
-                                videoid INT NOT NULL, -- ID của video
-                                PRIMARY KEY (progress_id),
-                                FOREIGN KEY (userid) REFERENCES users(id), -- Giả định bảng users có cột id
-                                FOREIGN KEY (videoid) REFERENCES videos(id) -- Giả định bảng videos có cột id
-) ENGINE=InnoDB;

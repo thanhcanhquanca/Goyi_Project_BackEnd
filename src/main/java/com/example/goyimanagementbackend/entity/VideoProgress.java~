@@ -1,0 +1,70 @@
+package com.example.goyimanagementbackend.entity;
+
+import com.example.goyimanagementbackend.eNum.VideoQuality; // Import enum VideoQuality
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "VideoProgress")
+@Data
+public class VideoProgress {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer progressId;                     // ID của tiến trình xem
+
+    @ManyToOne
+    @JoinColumn(name = "VideoID", nullable = false)
+    private Videos video;                           // Video đang xem
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", nullable = false)
+    private Users user;                             // Người dùng xem video
+
+    private Integer watchTime;                    // Thời điểm hiện tại (giây)
+
+    private Integer duration;                       // Tổng thời lượng video (giây)
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private VideoQuality videoQuality = VideoQuality.AUTO;  // Chất lượng video, mặc định là Auto
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime lastWatched;              // Thời điểm xem gần nhất
+
+    private Boolean isCompleted = false;            // Đã xem hết video chưa
+
+    // Constructor mặc định
+    public VideoProgress() {
+        this.lastWatched = LocalDateTime.now();     // Khởi tạo thời gian xem
+        this.watchTime = 0;                       // Bắt đầu từ 0 giây
+        this.isCompleted = false;                   // Chưa xem xong
+    }
+
+    // Helper method để cập nhật tiến độ xem
+    public void updateProgress(Integer currentTime) {
+        this.currentTime = currentTime;
+        this.lastWatched = LocalDateTime.now();
+        if (this.duration != null && currentTime >= this.duration) {
+            this.isCompleted = true;
+        }
+    }
+
+    // Helper method để tính phần trăm đã xem
+    public Double getProgressPercentage() {
+        if (this.duration == null || this.duration == 0) {
+            return 0.0;
+        }
+        return (this.currentTime * 100.0) / this.duration;
+    }
+
+    // Helper method để kiểm tra xem đã xem gần đây không
+    public boolean isRecentlyWatched(int minutes) {
+        return this.lastWatched.plusMinutes(minutes).isAfter(LocalDateTime.now());
+    }
+
+    // Helper method để lấy chất lượng video dưới dạng chuỗi
+    public String getQualityString() {
+        return this.videoQuality.getValue();
+    }
+}

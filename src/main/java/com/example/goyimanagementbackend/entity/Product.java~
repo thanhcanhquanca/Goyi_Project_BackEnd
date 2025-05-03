@@ -1,0 +1,80 @@
+package com.example.goyimanagementbackend.entity;
+ 
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull(message = "Shop ID is required")
+    @Column(name = "shop_id")
+    private Long shopId;
+
+    @NotNull(message = "Category ID is required")
+    @Column(name = "category_id")
+    private Long categoryId;
+
+    @NotBlank(message = "Product name is required")
+    @Size(max = 255, message = "Product name must not exceed 255 characters")
+    @Column(name = "product_name", length = 255)
+    private String productName;
+
+    @Size(max = 1000)
+    @Column(name = "product_description", length = 1000)
+    private String productDescription;
+
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.0", message = "Price must be greater than or equal to 0")
+    @Column(precision = 10, scale = 2)
+    private Double price;
+
+    @NotNull(message = "Stock is required")
+    @Min(value = 0, message = "Stock must be greater than or equal to 0")
+    private Integer stock;
+
+    @Column(name = "product_image_url", length = 255)
+    private String productImageURL;
+
+    @NotBlank(message = "Status is required")
+    @Column(length = 20)
+    private String status;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Date createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id", insertable = false, updatable = false)
+    private Shop shop;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetail> orderDetails;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cart> cartItems;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Wishlist> wishlistItems;
+
+    @PrePersist
+    protected void onCreate() {
+        if (status == null) {
+            status = "ACTIVE";
+        }
+    }
+}

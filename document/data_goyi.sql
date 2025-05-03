@@ -1,0 +1,331 @@
+
+
+-- 1. Chèn dữ liệu vào bảng roles
+INSERT INTO roles (role_name, description, created_at, updated_at) VALUES
+                                                                       ('ADMIN', 'Quản trị viên hệ thống', '2025-05-01 08:00:00', '2025-05-01 08:00:00'),
+                                                                       ('USER', 'Người dùng thông thường', '2025-05-01 08:00:00', '2025-05-01 08:00:00'),
+                                                                       ('CREATOR', 'Người tạo nội dung', '2025-05-01 08:00:00', '2025-05-01 08:00:00');
+
+-- 2. Chèn dữ liệu vào bảng permissions
+INSERT INTO permissions (permission_name, description, created_at) VALUES
+                                                                       ('MANAGE_USERS', 'Quản lý người dùng', '2025-05-01 08:00:00'),
+                                                                       ('MANAGE_VIDEOS', 'Quản lý video', '2025-05-01 08:00:00'),
+                                                                       ('CREATE_ADS', 'Tạo chiến dịch quảng cáo', '2025-05-01 08:00:00'),
+                                                                       ('VIEW_REPORTS', 'Xem báo cáo', '2025-05-01 08:00:00');
+
+-- 3. Chèn dữ liệu vào bảng paid_features
+INSERT INTO paid_features (feature_name, description, created_at) VALUES
+                                                                      ('PREMIUM_ANALYTICS', 'Phân tích nâng cao', '2025-05-01 08:00:00'),
+                                                                      ('AD_FREE', 'Xem không quảng cáo', '2025-05-01 08:00:00'),
+                                                                      ('EXCLUSIVE_CONTENT', 'Truy cập nội dung độc quyền', '2025-05-01 08:00:00');
+
+-- 4. Chèn dữ liệu vào bảng subscription_plans
+INSERT INTO subscription_plans (plan_name, description, price, duration, status, created_at) VALUES
+                                                                                                 ('Basic Plan', 'Gói cơ bản', 9.99, 30, 'ACTIVE', '2025-05-01 08:00:00'),
+                                                                                                 ('Premium Plan', 'Gói cao cấp', 19.99, 30, 'ACTIVE', '2025-05-01 08:00:00'),
+                                                                                                 ('Annual Plan', 'Gói hàng năm', 199.99, 365, 'ACTIVE', '2025-05-01 08:00:00');
+
+-- 5. Chèn dữ liệu vào bảng video_categories
+INSERT INTO video_categories (category_name, description, created_at) VALUES
+                                                                          ('Gaming', 'Video về trò chơi', '2025-05-01 08:00:00'),
+                                                                          ('Music', 'Video âm nhạc', '2025-05-01 08:00:00'),
+                                                                          ('Education', 'Video giáo dục', '2025-05-01 08:00:00');
+
+-- 6. Chèn dữ liệu vào bảng video_tags
+INSERT INTO video_tags (tag_name, created_at) VALUES
+                                                  ('gameplay', '2025-05-01 08:00:00'),
+                                                  ('tutorial', '2025-05-01 08:00:00'),
+                                                  ('music_video', '2025-05-01 08:00:00');
+
+-- 7. Chèn dữ liệu vào bảng users
+INSERT INTO users (user_name, full_name, phone_number, email, password, roleid, status, created_at, updated_at, profile_picture, user_code, is2fa_enabled, copyright_violations) VALUES
+                                                                                                                                                                                     ('john_doe', 'John Doe', '1234567890', 'john@example.com', 'hashed_password1', 2, 'ACTIVE', '2025-05-01 08:00:00', '2025-05-01 08:00:00', 'profile1.jpg', 'USER001', 0, 0),
+                                                                                                                                                                                     ('jane_smith', 'Jane Smith', '0987654321', 'jane@example.com', 'hashed_password2', 3, 'ACTIVE', '2025-05-01 08:00:00', '2025-05-01 08:00:00', 'profile2.jpg', 'USER002', 1, 0),
+                                                                                                                                                                                     ('alice_brown', 'Alice Brown', '1122334455', 'alice@example.com', 'hashed_password3', 3, 'ACTIVE', '2025-05-01 08:00:00', '2025-05-01 08:00:00', 'profile3.jpg', 'USER003', 0, 1);
+
+-- 8. Chèn dữ liệu vào bảng admins
+INSERT INTO admins (user_name, phone_number, email, password, status, created_at, updated_at) VALUES
+                                                                                                  ('admin1', '5555555555', 'admin1@example.com', 'admin_hashed_password1', 'ACTIVE', '2025-05-01 08:00:00', '2025-05-01 08:00:00'),
+                                                                                                  ('admin2', '6666666666', 'admin2@example.com', 'admin_hashed_password2', 'ACTIVE', '2025-05-01 08:00:00', '2025-05-01 08:00:00');
+
+-- 9. Chèn dữ liệu vào bảng videos
+INSERT INTO videos (userid, title, description, video_url, thumbnail_url, duration, status, created_at, updated_at, copyright_status, available_qualities, is_deleted) VALUES
+                                                                                                                                                                           (2, 'Gameplay Tutorial', 'Hướng dẫn chơi game XYZ', 'https://example.com/videos/gameplay.mp4', 'https://example.com/thumbs/gameplay.jpg', 600, 'PUBLIC', '2025-05-01 09:00:00', '2025-05-01 09:00:00', 'VERIFIED', '["360p", "720p", "1080p"]', 0),
+                                                                                                                                                                           (2, 'Music Video', 'Video âm nhạc mới nhất', 'https://example.com/videos/music.mp4', 'https://example.com/thumbs/music.jpg', 240, 'PUBLIC', '2025-05-01 09:00:00', '2025-05-01 09:00:00', 'LICENSED', '["480p", "1080p"]', 0),
+                                                                                                                                                                           (3, 'Math Tutorial', 'Học toán cơ bản', 'https://example.com/videos/math.mp4', 'https://example.com/thumbs/math.jpg', 900, 'PUBLIC', '2025-05-01 09:00:00', '2025-05-01 09:00:00', 'FAIR_USE', '["720p", "1080p"]', 0);
+
+-- 10. Chèn dữ liệu vào bảng admin_ad_campaigns
+INSERT INTO admin_ad_campaigns (adminid, campaign_title, campaign_content, description, target_location, start_date, end_date, status, created_at, updated_at) VALUES
+                                                                                                                                                                   (1, 'Summer Sale Ad', 'Khuyến mãi mùa hè', 'Giảm giá 50% tất cả sản phẩm', 'HOMEPAGE', '2025-05-01 10:00:00', '2025-06-01 10:00:00', 'ACTIVE', '2025-05-01 10:00:00', '2025-05-01 10:00:00'),
+                                                                                                                                                                   (2, 'New Product Launch', 'Giới thiệu sản phẩm mới', 'Sản phẩm công nghệ tiên tiến', 'VIDEO_PAGE', '2025-05-01 10:00:00', '2025-07-01 10:00:00', 'ACTIVE', '2025-05-01 10:00:00', '2025-05-01 10:00:00');
+
+-- 11. Chèn dữ liệu vào bảng ad_campaigns
+INSERT INTO ad_campaigns (userid, campaign_name, description, budget, duration, target_views, target_subscriptions, start_date, end_date, status, created_at, updated_at, views_achieved, subscriptions_achieved) VALUES
+                                                                                                                                                                                                                      (2, 'Gaming Ad Campaign', 'Quảng cáo game mới', 1000.00, 30, 10000, 500, '2025-05-01 10:00:00', '2025-05-31 10:00:00', 'ACTIVE', '2025-05-01 10:00:00', '2025-05-01 10:00:00', 2000, 100),
+                                                                                                                                                                                                                      (3, 'Education Ad Campaign', 'Quảng cáo khóa học toán', 500.00, 15, 5000, 200, '2025-05-01 10:00:00', '2025-05-16 10:00:00', 'PENDING', '2025-05-01 10:00:00', '2025-05-01 10:00:00', 500, 20);
+
+-- 12. Chèn dữ liệu vào bảng ad_display_locations
+INSERT INTO ad_display_locations (campaignid, location_name, location_description, display_start, display_end) VALUES
+                                                                                                                   (1, 'Homepage Banner', 'Banner ở trang chủ', '2025-05-01 10:00:00', '2025-06-01 10:00:00'),
+                                                                                                                   (2, 'Video Page Sidebar', 'Quảng cáo bên cạnh video', '2025-05-01 10:00:00', '2025-07-01 10:00:00');
+
+-- 13. Chèn dữ liệu vào bảng ad_impressions
+INSERT INTO ad_impressions (campaignid, userid, impression_time) VALUES
+                                                                     (1, 1, '2025-05-01 11:00:00'),
+                                                                     (1, 3, '2025-05-01 11:05:00'),
+                                                                     (2, 1, '2025-05-01 11:10:00');
+
+-- 14. Chèn dữ liệu vào bảng ad_placements
+INSERT INTO ad_placements (campaignid, locationid, videoid, display_start, display_end, status) VALUES
+                                                                                                    (1, 1, 1, '2025-05-01 10:00:00', '2025-05-31 10:00:00', 'ACTIVE'),
+                                                                                                    (2, 2, 2, '2025-05-01 10:00:00', '2025-05-16 10:00:00', 'INACTIVE');
+
+-- 15. Chèn dữ liệu vào bảng ad_revenue
+INSERT INTO ad_revenue (userid, videoid, campaignid, total_views, cpm, revenue_amount, revenue_date, created_at) VALUES
+                                                                                                                     (2, 1, 1, 1000, 5.00, 5.00, '2025-05-01', '2025-05-01 12:00:00'),
+                                                                                                                     (3, 3, 2, 500, 4.00, 2.00, '2025-05-01', '2025-05-01 12:00:00');
+
+-- 16. Chèn dữ liệu vào bảng ad_views
+INSERT INTO ad_views (campaignid, userid, view_time) VALUES
+                                                         (1, 1, '2025-05-01 11:00:00'),
+                                                         (2, 3, '2025-05-01 11:05:00');
+
+-- 17. Chèn dữ liệu vào bảng admin_activity_logs
+INSERT INTO admin_activity_logs (adminid, action_type, action_details, action_time) VALUES
+                                                                                        (1, 'LOGIN', 'Admin đăng nhập', '2025-05-01 08:30:00'),
+                                                                                        (2, 'UPDATE', 'Admin cập nhật chiến dịch quảng cáo', '2025-05-01 10:15:00');
+
+-- 18. Chèn dữ liệu vào bảng channel_follow_history
+INSERT INTO channel_follow_history (follower_channelid, followed_channelid, action, action_date) VALUES
+                                                                                                     (1, 2, 'FOLLOW', '2025-05-01 09:00:00'),
+                                                                                                     (3, 2, 'FOLLOW', '2025-05-01 09:05:00'),
+                                                                                                     (1, 3, 'UNFOLLOW', '2025-05-01 09:10:00');
+
+-- 19. Chèn dữ liệu vào bảng channel_followings
+INSERT INTO channel_followings (follower_channelid, followed_channelid, created_at) VALUES
+                                                                                        (1, 2, '2025-05-01 09:00:00'),
+                                                                                        (3, 2, '2025-05-01 09:05:00');
+
+-- 20. Chèn dữ liệu vào bảng posts
+INSERT INTO posts (userid, title, summary, content, status, category, created_at, updated_at) VALUES
+                                                                                                  (2, 'Gaming Tips', 'Mẹo chơi game XYZ', 'Nội dung chi tiết về mẹo chơi', 'PUBLIC', 'Gaming', '2025-05-01 09:00:00', '2025-05-01 09:00:00'),
+                                                                                                  (3, 'Math Basics', 'Cơ bản về toán học', 'Bài giảng toán học', 'PUBLIC', 'Education', '2025-05-01 09:00:00', '2025-05-01 09:00:00');
+
+-- 21. Chèn dữ liệu vào bảng post_comments
+INSERT INTO post_comments (postid, userid, parent_commentid, comment_text, status, created_at, updated_at) VALUES
+                                                                                                               (1, 1, NULL, 'Bài viết rất hữu ích!', 'ACTIVE', '2025-05-01 09:30:00', '2025-05-01 09:30:00'),
+                                                                                                               (1, 3, 1, 'Cảm ơn bạn!', 'ACTIVE', '2025-05-01 09:35:00', '2025-05-01 09:35:00'),
+                                                                                                               (2, 1, NULL, 'Hiểu bài hơn nhờ bài viết', 'ACTIVE', '2025-05-01 09:40:00', '2025-05-01 09:40:00');
+
+-- 22. Chèn dữ liệu vào bảng comment_images
+INSERT INTO comment_images (commentid, image_url, caption, created_at) VALUES
+                                                                           (1, 'https://example.com/images/comment1.jpg', 'Hình minh họa', '2025-05-01 09:30:00'),
+                                                                           (2, 'https://example.com/images/comment2.jpg', 'Cảm ơn', '2025-05-01 09:35:00');
+
+-- 23. Chèn dữ liệu vào bảng comment_likes
+INSERT INTO comment_likes (commentid, userid, created_at, is_active) VALUES
+                                                                         (1, 3, '2025-05-01 09:32:00', 1),
+                                                                         (2, 1, '2025-05-01 09:37:00', 1);
+
+-- 24. Chèn dữ liệu vào bảng comment_mentions
+INSERT INTO comment_mentions (commentid, mentioned_userid, created_at) VALUES
+                                                                           (2, 1, '2025-05-01 09:35:00'),
+                                                                           (3, 2, '2025-05-01 09:40:00');
+
+-- 25. Chèn dữ liệu vào bảng comment_reactions
+INSERT INTO comment_reactions (commentid, userid, reaction_type, created_at) VALUES
+                                                                                 (1, 3, 'LIKE', '2025-05-01 09:32:00'),
+                                                                                 (2, 1, 'HEART', '2025-05-01 09:37:00');
+
+-- 26. Chèn dữ liệu vào bảng comment_reports
+INSERT INTO comment_reports (commentid, userid, report_reason, status, created_at) VALUES
+                                                                                       (1, 3, 'Nội dung không phù hợp', 'PENDING', '2025-05-01 09:33:00'),
+                                                                                       (3, 2, 'Spam', 'PENDING', '2025-05-01 09:41:00');
+
+-- 27. Chèn dữ liệu vào bảng copyright_claims
+INSERT INTO copyright_claims (videoid, claimant_userid, claimant_name, claimant_email, claim_reason, claim_status, claim_date, adminid) VALUES
+                                                                                                                                            (1, 3, 'Alice Brown', 'alice@example.com', 'Sử dụng âm nhạc không phép', 'PENDING', '2025-05-01 10:00:00', 1),
+                                                                                                                                            (2, 1, 'John Doe', 'john@example.com', 'Vi phạm bản quyền hình ảnh', 'UNDER_REVIEW', '2025-05-01 10:00:00', 2);
+
+-- 28. Chèn dữ liệu vào bảng copyright_disputes
+INSERT INTO copyright_disputes (claimid, videoid, userid, dispute_reason, dispute_status, dispute_date, adminid) VALUES
+                                                                                                                     (1, 1, 2, 'Tôi có quyền sử dụng âm nhạc', 'PENDING', '2025-05-01 10:30:00', 1),
+                                                                                                                     (2, 2, 2, 'Hình ảnh thuộc về tôi', 'UNDER_REVIEW', '2025-05-01 10:35:00', 2);
+
+-- 29. Chèn dữ liệu vào bảng copyright_actions
+INSERT INTO copyright_actions (claimid, disputeid, videoid, adminid, action_type, action_reason, action_date) VALUES
+                                                                                                                  (1, 1, 1, 1, 'WARN_USER', 'Cảnh báo vi phạm bản quyền', '2025-05-01 11:00:00'),
+                                                                                                                  (2, 2, 2, 2, 'RESTRICT_VIDEO', 'Hạn chế video do tranh chấp', '2025-05-01 11:05:00');
+
+-- 30. Chèn dữ liệu vào bảng monetization_status
+INSERT INTO monetization_status (userid, status, application_date, total_watch_hours, total_subscribers, created_at, updated_at) VALUES
+                                                                                                                                     (2, 'APPROVED', '2025-04-01 08:00:00', 4000.00, 1000, '2025-04-01 08:00:00', '2025-05-01 08:00:00'),
+                                                                                                                                     (3, 'PENDING', '2025-05-01 08:00:00', 2000.00, 500, '2025-05-01 08:00:00', '2025-05-01 08:00:00');
+
+-- 31. Chèn dữ liệu vào bảng notifications
+INSERT INTO notifications (userid, senderid, notification_type, reference_id, reference_type, message, is_read, created_at) VALUES
+                                                                                                                                (1, 2, 'NEW_FOLLOW', 2, 'USER', 'Jane Smith đã theo dõi bạn', 0, '2025-05-01 09:00:00'),
+                                                                                                                                (2, 1, 'NEW_COMMENT', 1, 'POST', 'John Doe đã bình luận bài viết', 0, '2025-05-01 09:30:00'),
+                                                                                                                                (3, 1, 'NEW_LIKE', 3, 'POST', 'John Doe đã thích bài viết', 0, '2025-05-01 09:40:00');
+
+-- 32. Chèn dữ liệu vào bảng payment_gateway_transactions
+INSERT INTO payment_gateway_transactions (userid, payment_method, gateway_type, gateway_transaction_reference, amount, gateway_fee, status, transaction_date) VALUES
+                                                                                                                                                                  (1, 'Credit Card', 'MOMO', 'TX123456', 19.99, 0.50, 'COMPLETED', '2025-05-01 10:00:00'),
+                                                                                                                                                                  (2, 'Bank Transfer', 'BANK_API', 'TX789012', 199.99, 1.00, 'PENDING', '2025-05-01 10:05:00');
+
+-- 33. Chèn dữ liệu vào bảng user_wallets
+INSERT INTO user_wallets (userid, balance, currency, created_at, updated_at) VALUES
+                                                                                 (1, 50.00, 'USD', '2025-05-01 08:00:00', '2025-05-01 08:00:00'),
+                                                                                 (2, 200.00, 'USD', '2025-05-01 08:00:00', '2025-05-01 08:00:00'),
+                                                                                 (3, 10.00, 'USD', '2025-05-01 08:00:00', '2025-05-01 08:00:00');
+
+-- 34. Chèn dữ liệu vào bảng payout_requests
+INSERT INTO payout_requests (userid, walletid, amount, fee, net_amount, payment_method, status, request_date) VALUES
+                                                                                                                  (2, 2, 100.00, 2.00, 98.00, 'Bank Transfer', 'PENDING', '2025-05-01 11:00:00'),
+                                                                                                                  (3, 3, 10.00, 0.50, 9.50, 'PayPal', 'APPROVED', '2025-05-01 11:05:00');
+
+-- 35. Chèn dữ liệu vào bảng plan_features
+INSERT INTO plan_features (planid, featureid) VALUES
+                                                  (2, 1),
+                                                  (2, 2),
+                                                  (3, 1),
+                                                  (3, 2),
+                                                  (3, 3);
+
+-- 36. Chèn dữ liệu vào bảng platform_ad_revenue
+INSERT INTO platform_ad_revenue (campaignid, total_views, cpm, revenue_amount, revenue_date, created_at) VALUES
+                                                                                                             (1, 5000, 6.00, 30.00, '2025-05-01', '2025-05-01 12:00:00'),
+                                                                                                             (2, 3000, 5.00, 15.00, '2025-05-01', '2025-05-01 12:00:00');
+
+-- 37. Chèn dữ liệu vào bảng post_images
+INSERT INTO post_images (postid, image_url, caption, created_at) VALUES
+                                                                     (1, 'https://example.com/images/post1.jpg', 'Hình ảnh game', '2025-05-01 09:00:00'),
+                                                                     (2, 'https://example.com/images/post2.jpg', 'Hình ảnh toán học', '2025-05-01 09:00:00');
+
+-- 38. Chèn dữ liệu vào bảng post_likes
+INSERT INTO post_likes (postid, userid, created_at, is_active) VALUES
+                                                                   (1, 1, '2025-05-01 09:10:00', 1),
+                                                                   (2, 3, '2025-05-01 09:15:00', 1);
+
+-- 39. Chèn dữ liệu vào bảng post_mentions
+INSERT INTO post_mentions (postid, mentioned_userid, created_at) VALUES
+                                                                     (1, 3, '2025-05-01 09:00:00'),
+                                                                     (2, 1, '2025-05-01 09:00:00');
+
+-- 40. Chèn dữ liệu vào bảng post_shares
+INSERT INTO post_shares (postid, userid, share_platform, created_at) VALUES
+                                                                         (1, 1, 'FACEBOOK', '2025-05-01 09:20:00'),
+                                                                         (2, 3, 'TWITTER', '2025-05-01 09:25:00');
+
+-- 41. Chèn dữ liệu vào bảng post_views
+INSERT INTO post_views (postid, userid, created_at) VALUES
+                                                        (1, 1, '2025-05-01 09:05:00'),
+                                                        (2, 3, '2025-05-01 09:10:00');
+
+-- 42. Chèn dữ liệu vào bảng role_permissions
+INSERT INTO role_permissions (roleid, permissionid, created_at) VALUES
+                                                                    (1, 1, '2025-05-01 08:00:00'),
+                                                                    (1, 2, '2025-05-01 08:00:00'),
+                                                                    (3, 3, '2025-05-01 08:00:00');
+
+-- 43. Chèn dữ liệu vào bảng statistics
+INSERT INTO statistics (userid, stat_type, stat_date, total_video_views, total_likes, total_subscriptions, total_users_who_watched, total_users_subscribed, total_users_liked, created_at) VALUES
+                                                                                                                                                                                               (2, 'DAILY', '2025-05-01', 1000, 50, 20, 100, 20, 50, '2025-05-01 12:00:00'),
+                                                                                                                                                                                               (3, 'DAILY', '2025-05-01', 500, 30, 10, 50, 10, 30, '2025-05-01 12:00:00');
+
+-- 44. Chèn dữ liệu vào bảng transactions
+INSERT INTO transactions (userid, planid, amount, payment_method, transaction_reference, transaction_date, status) VALUES
+                                                                                                                       (1, 2, 19.99, 'CREDIT_CARD', 'TX123456', '2025-05-01 10:00:00', 'SUCCESS'),
+                                                                                                                       (2, 3, 199.99, 'PAYPAL', 'TX789012', '2025-05-01 10:05:00', 'PENDING');
+
+
+
+INSERT INTO user_playback_settings (userid, default_playback_speed, default_video_quality, default_stop_after_minutes, default_is_loop_enabled, updated_at) VALUES
+                                                                                                                                                                (1, 1.0, 'AUTO', NULL, 0, '2025-05-01 08:00:00'),
+                                                                                                                                                                (2, 1.5, 'P_480', 30, 1, '2025-05-01 08:00:00'),   -- thay 'MEDIUM' bằng 'P_480' hoặc giá trị hợp lệ khác
+                                                                                                                                                                (3, 2.0, 'P_1080', 60, 0, '2025-05-01 08:00:00');  -- thay 'HIGH' bằng 'P_1080' hoặc giá trị hợp lệ khác
+
+-- 46. Chèn dữ liệu vào bảng user_subscriptions
+INSERT INTO user_subscriptions (userid, planid, start_date, end_date, status) VALUES
+                                                                                  (1, 2, '2025-05-01 10:00:00', '2025-06-01 10:00:00', 'ACTIVE'),
+                                                                                  (2, 3, '2025-05-01 10:05:00', '2026-05-01 10:05:00', 'ACTIVE');
+
+-- 47. Chèn dữ liệu vào bảng video_access_logs
+INSERT INTO video_access_logs (videoid, userid, access_type, access_time) VALUES
+                                                                              (1, 1, 'VIEW', '2025-05-01 09:10:00'),
+                                                                              (2, 3, 'VIEW', '2025-05-01 09:15:00');
+
+-- 48. Chèn dữ liệu vào bảng video_ad_views
+INSERT INTO video_ad_views (videoid, campaignid, userid, view_time) VALUES
+                                                                        (1, 1, 1, '2025-05-01 11:00:00'),
+                                                                        (2, 2, 3, '2025-05-01 11:05:00');
+
+-- 49. Chèn dữ liệu vào bảng video_category_assignments
+INSERT INTO video_category_assignments (videoid, categoryid, created_at) VALUES
+                                                                             (1, 1, '2025-05-01 09:00:00'),
+                                                                             (2, 2, '2025-05-01 09:00:00'),
+                                                                             (3, 3, '2025-05-01 09:00:00');
+
+-- 50. Chèn dữ liệu vào bảng video_comments
+INSERT INTO video_comments (videoid, userid, parent_commentid, comment_text, status, created_at, updated_at) VALUES
+                                                                                                                 (1, 1, NULL, 'Video rất hay!', 'ACTIVE', '2025-05-01 09:20:00', '2025-05-01 09:20:00'),
+                                                                                                                 (1, 3, 1, 'Cảm ơn bạn đã xem!', 'ACTIVE', '2025-05-01 09:25:00', '2025-05-01 09:25:00'),
+                                                                                                                 (2, 1, NULL, 'Âm nhạc tuyệt vời', 'ACTIVE', '2025-05-01 09:30:00', '2025-05-01 09:30:00');
+
+-- 51. Chèn dữ liệu vào bảng video_comment_images
+INSERT INTO video_comment_images (commentid, image_url, caption, created_at) VALUES
+                                                                                 (1, 'https://example.com/images/vcomment1.jpg', 'Hình ảnh game', '2025-05-01 09:20:00'),
+                                                                                 (2, 'https://example.com/images/vcomment2.jpg', 'Cảm ơn', '2025-05-01 09:25:00');
+
+-- 52. Chèn dữ liệu vào bảng video_comment_mentions
+INSERT INTO video_comment_mentions (commentid, mentioned_userid, created_at) VALUES
+                                                                                 (2, 1, '2025-05-01 09:25:00'),
+                                                                                 (3, 2, '2025-05-01 09:30:00');
+
+-- 53. Chèn dữ liệu vào bảng video_comment_reactions
+INSERT INTO video_comment_reactions (commentid, userid, reaction_type, created_at) VALUES
+                                                                                       (1, 3, 'LIKE', '2025-05-01 09:22:00'),
+                                                                                       (2, 1, 'HEART', '2025-05-01 09:27:00');
+
+-- 54. Chèn dữ liệu vào bảng video_likes
+INSERT INTO video_likes (videoid, userid, created_at, is_active) VALUES
+                                                                     (1, 1, '2025-05-01 09:15:00', 1),
+                                                                     (2, 3, '2025-05-01 09:20:00', 1);
+
+-- 55. Chèn dữ liệu vào bảng video_processing_logs
+INSERT INTO video_processing_logs (videoid, processing_details, processing_status, start_time, end_time, progress) VALUES
+                                                                                                                       (1, 'Xử lý video gameplay', 'COMPLETED', '2025-05-01 08:30:00', '2025-05-01 08:45:00', 100),
+                                                                                                                       (2, 'Xử lý video âm nhạc', 'PROCESSING', '2025-05-01 08:30:00', NULL, 50);
+
+-- 56. Chèn dữ liệu vào bảng video_reports
+INSERT INTO video_reports (videoid, userid, reason, report_type, status, created_at, reviewed_by_adminid) VALUES
+                                                                                                              (1, 3, 'Nội dung không phù hợp', 'INAPPROPRIATE_CONTENT', 'PENDING', '2025-05-01 09:30:00', NULL),
+                                                                                                              (2, 1, 'Vi phạm bản quyền', 'COPYRIGHT_VIOLATION', 'REVIEWED', '2025-05-01 09:35:00', 1);
+
+-- 57. Chèn dữ liệu vào bảng video_tag_assignments
+INSERT INTO video_tag_assignments (videoid, tagid, created_at) VALUES
+                                                                   (1, 1, '2025-05-01 09:00:00'),
+                                                                   (2, 3, '2025-05-01 09:00:00'),
+                                                                   (3, 2, '2025-05-01 09:00:00');
+
+-- 58. Chèn dữ liệu vào bảng video_views
+INSERT INTO video_views (videoid, userid, created_at) VALUES
+                                                          (1, 1, '2025-05-01 09:10:00'),
+                                                          (2, 3, '2025-05-01 09:15:00');
+
+-- 59. Chèn dữ liệu vào bảng video_watch_later
+INSERT INTO video_watch_later (videoid, userid, saved_at) VALUES
+                                                              (1, 1, '2025-05-01 09:05:00'),
+                                                              (3, 3, '2025-05-01 09:10:00');
+
+-- 60. Chèn dữ liệu vào bảng wallet_transactions
+INSERT INTO wallet_transactions (walletid, amount, transaction_type, reference_id, description, transaction_status, created_at, payment_method) VALUES
+                                                                                                                                                    (1, 50.00, 'DEPOSIT', 'TX123456', 'Nạp tiền vào ví', 'COMPLETED', '2025-05-01 10:00:00', 'CREDIT_CARD'),
+                                                                                                                                                    (2, 100.00, 'WITHDRAW', 'TX789012', 'Rút tiền từ ví', 'PENDING', '2025-05-01 10:05:00', 'BANK_TRANSFER');
+
+INSERT INTO video_progress (watch_time, duration, is_completed, last_watched, video_quality, userid, videoid) VALUES
+                                                                                                                  (120, 300, 0, '2025-05-03 10:00:00', 'P_720', 1, 1), -- User1 xem 120s/300s video 1, chất lượng 720p
+                                                                                                                  (200, 200, 1, '2025-05-03 10:30:00', 'P_1080', 2, 2), -- User2 xem hết video 2, chất lượng 1080p
+                                                                                                                  (50, 180, 0, '2025-05-03 11:00:00', 'AUTO', 3, 3), -- User3 xem 50s/180s video 3, chất lượng tự động
+                                                                                                                  (90, 400, 0, '2025-05-03 11:15:00', 'P_480', 1, 2); -- User1 xem 90s/400s video 2, chất lượng 480p
+ 

@@ -1,0 +1,47 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "AdminAdCampaigns")
+@Data
+public class AdminAdCampaigns {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer campaignId;
+
+    @ManyToOne
+    @JoinColumn(name = "AdminID", nullable = false)
+    private Admins admin;
+
+    @Column(nullable = false, length = 255)
+    private String campaignTitle;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String campaignContent;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Homepage', 'VideoPage', 'PostPage', 'Sidebar')", nullable = false)
+    private String targetLocation;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime startDate;
+
+    private LocalDateTime endDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Active', 'Inactive') DEFAULT 'Inactive'")
+    private String status;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private LocalDateTime updatedAt;
+}

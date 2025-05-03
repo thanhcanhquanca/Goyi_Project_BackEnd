@@ -1,0 +1,48 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "Admins", indexes = {
+        @Index(name = "idx_phonenumber", columnList = "PhoneNumber"),
+        @Index(name = "idx_username", columnList = "UserName")
+})
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Admin {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "AdminID")
+    private Integer adminId;
+
+    @Column(name = "UserName", nullable = false, unique = true, length = 50)
+    private String userName;
+
+    @Column(name = "PhoneNumber", nullable = false, unique = true, length = 20)
+    private String phoneNumber;
+
+    @Column(name = "Email", length = 100)
+    private String email;
+
+    @Column(name = "Password", nullable = false, length = 255)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Status", nullable = false)
+    private Status status = Status.Active;
+
+    @Column(name = "CreatedAt", nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(name = "UpdatedAt")
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
+    public enum Status {
+        Active, Inactive
+    }
+}

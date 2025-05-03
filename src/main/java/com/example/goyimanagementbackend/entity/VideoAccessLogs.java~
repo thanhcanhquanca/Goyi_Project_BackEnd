@@ -1,0 +1,30 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "VideoAccessLogs")
+@Data
+public class VideoAccessLogs {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer logId;
+
+    @ManyToOne
+    @JoinColumn(name = "VideoID", nullable = false)
+    private Videos video;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", nullable = false)
+    private Users user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('CampaignStatus', 'Edit', 'Delete', 'Share')", nullable = false)
+    private String accessType;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime accessTime;
+}

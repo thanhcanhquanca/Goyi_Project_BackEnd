@@ -1,0 +1,9 @@
+package com.example.goyimanagementbackend.eNum;
+
+public enum AdminActionType {
+    LOGIN,      // Admin đăng nhập
+    LOGOUT,     // Admin đăng xuất
+    UPDATE,     // Admin cập nhật
+    DELETE,     // Admin xóa
+    OTHER       // Các hành động khác
+}

@@ -1,0 +1,10 @@
+package com.example.goyimanagementbackend.eNum;
+
+ 
+public enum VideoStatus {
+    PUBLIC,         // Video công khai, ai cũng xem được
+    PRIVATE,        // Video riêng tư, chỉ chủ sở hữu xem được
+    RESTRICTED,     // Video bị giới hạn người xem
+    UNDER_REVIEW,   // Video đang được xem xét
+    BLOCKED         // Video bị chặn
+}

@@ -1,0 +1,7 @@
+package com.example.goyimanagementbackend.eNum;
+
+public enum VideoReportStatus {
+    PENDING,    // Đang chờ xử lý
+    REVIEWED,   // Đã được xem xét
+    RESOLVED    // Đã giải quyết
+}

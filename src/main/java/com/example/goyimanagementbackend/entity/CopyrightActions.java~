@@ -1,0 +1,41 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "CopyrightActions")
+@Data
+public class CopyrightActions {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer actionId;
+
+    @ManyToOne
+    @JoinColumn(name = "ClaimID")
+    private CopyrightClaims claim;
+
+    @ManyToOne
+    @JoinColumn(name = "DisputeID")
+    private CopyrightDisputes dispute;
+
+    @ManyToOne
+    @JoinColumn(name = "VideoID", nullable = false)
+    private Videos video;
+
+    @ManyToOne
+    @JoinColumn(name = "AdminID", nullable = false)
+    private Admins admin;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('RemoveVideo', 'RestrictVideo', 'WarnUser', 'BanUser', 'MonetizationRedirect', 'RestoreVideo')", nullable = false)
+    private String actionType;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String actionReason;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime actionDate;
+}

@@ -1,0 +1,37 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "Admins")
+@Data
+public class Admins {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer adminId;
+
+    @Column(nullable = false, unique = true, length = 50)
+    private String userName;
+
+    @Column(nullable = false, unique = true, length = 20)
+    private String phoneNumber;
+
+    @Column(length = 100)
+    private String email;
+
+    @Column(nullable = false, length = 255)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Active', 'Inactive') DEFAULT 'Active'")
+    private String status;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private LocalDateTime updatedAt;
+}

@@ -1,0 +1,53 @@
+package com.example.goyimanagementbackend.entity;
+
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "Posts", indexes = {
+        @Index(name = "idx_userid", columnList = "UserID"),
+        @Index(name = "idx_status", columnList = "Status"),
+        @Index(name = "idx_createdat", columnList = "CreatedAt")
+})
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PostID")
+    private Integer postId;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", nullable = false)
+    private User user;
+
+    @Column(name = "Title", nullable = false, length = 255)
+    private String title;
+
+    @Column(name = "Summary", length = 500)
+    private String summary;
+
+    @Column(name = "Content", nullable = false, columnDefinition = "TEXT")
+    private String content;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Status", nullable = false)
+    private Status status = Status.Public;
+
+    @Column(name = "Category", length = 100)
+    private String category;
+
+    @Column(name = "CreatedAt", nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(name = "UpdatedAt")
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
+    public enum Status {
+        Public, Private, Deleted
+    }
+}
