@@ -3,6 +3,8 @@ package com.example.goyimanagementbackend.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Permissions")
@@ -20,4 +22,10 @@ public class Permissions {
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @ManyToMany(mappedBy = "permissions")
+    private Set<Roles> roles = new HashSet<>();
 }
