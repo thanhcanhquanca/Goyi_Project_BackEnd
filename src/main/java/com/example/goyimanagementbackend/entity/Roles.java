@@ -1,6 +1,7 @@
 package com.example.goyimanagementbackend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -28,14 +29,14 @@ public class Roles {
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "role_permission",
+            name = "role_permissions",
             joinColumns = @JoinColumn(name = "roleid"),
             inverseJoinColumns = @JoinColumn(name = "permissionid")
     )
-    private Set<Permissions> permissions = new HashSet<>();
-    public String getAuthority() {
-        return this.roleName;
-    }
+    private Set<Permissions> permissions;
+
+
 }

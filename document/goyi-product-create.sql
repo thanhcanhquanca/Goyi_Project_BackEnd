@@ -781,3 +781,71 @@ CREATE TABLE video_progress (
                                 FOREIGN KEY (userid) REFERENCES users(id), -- Giả định bảng users có cột id
                                 FOREIGN KEY (videoid) REFERENCES videos(id) -- Giả định bảng videos có cột id
 ) ENGINE=InnoDB;
+
+
+
+-- Gán quyền cho ADMIN (role_id = 1, có tất cả quyền)
+INSERT INTO role_permissions (roleid, permissionid)
+SELECT 1, permission_id FROM permissions WHERE permission_name IN (
+                                                                   'CREATE_ROOM', 'VIEW_ROOM', 'UPDATE_ROOM', 'DELETE_ROOM', 'ROOM_MANAGEMENT',
+                                                                   'CREATE_ROOM_CATEGORY', 'VIEW_ROOM_CATEGORY', 'UPDATE_ROOM_CATEGORY', 'DELETE_ROOM_CATEGORY', 'ROOM_CATEGORY_MANAGEMENT',
+                                                                   'CREATE_EMPLOYEE', 'VIEW_EMPLOYEE', 'UPDATE_EMPLOYEE', 'DELETE_EMPLOYEE', 'EMPLOYEE_MANAGEMENT',
+                                                                   'CREATE_USER', 'VIEW_USER', 'UPDATE_USER', 'DELETE_USER', 'USER_MANAGEMENT',
+                                                                   'VIEW_ROLE', 'CREATE_ROLE', 'UPDATE_ROLE', 'DELETE_ROLE', 'ROLE_MANAGEMENT',
+                                                                   'VIEW_ACTIVITY_LOG',
+                                                                   'CREATE_POST', 'VIEW_POST', 'UPDATE_POST', 'DELETE_POST', 'POST_MANAGEMENT',
+                                                                   'CREATE_VIDEO', 'VIEW_VIDEO', 'UPDATE_VIDEO', 'DELETE_VIDEO', 'VIDEO_MANAGEMENT',
+                                                                   'CREATE_COMMENT', 'VIEW_COMMENT', 'UPDATE_COMMENT', 'DELETE_COMMENT', 'COMMENT_MANAGEMENT',
+                                                                   'CREATE_VIDEO_COMMENT', 'VIEW_VIDEO_COMMENT', 'UPDATE_VIDEO_COMMENT', 'DELETE_VIDEO_COMMENT', 'VIDEO_COMMENT_MANAGEMENT',
+                                                                   'CREATE_AD_CAMPAIGN', 'VIEW_AD_CAMPAIGN', 'UPDATE_AD_CAMPAIGN', 'DELETE_AD_CAMPAIGN', 'AD_CAMPAIGN_MANAGEMENT',
+                                                                   'VIEW_NOTIFICATION', 'MANAGE_NOTIFICATION',
+                                                                   'VIEW_STATISTICS', 'MANAGE_STATISTICS',
+                                                                   'FOLLOW_CHANNEL', 'UNFOLLOW_CHANNEL',
+                                                                   'LIKE_VIDEO', 'UNLIKE_VIDEO',
+                                                                   'LIKE_POST', 'UNLIKE_POST',
+                                                                   'VIEW_WATCH_HISTORY', 'MANAGE_WATCH_HISTORY'
+    );
+
+-- Gán quyền cho USER (role_id = 2, quyền hạn chế)
+INSERT INTO role_permissions (roleid, permissionid)
+SELECT 2, permission_id FROM permissions WHERE permission_name IN (
+                                                                   'VIEW_PROFILE', 'EDIT_PROFILE', 'VIEW_USER_DASHBOARD',
+                                                                   'CREATE_POST', 'VIEW_POST', 'UPDATE_POST',
+                                                                   'CREATE_VIDEO', 'VIEW_VIDEO', 'UPDATE_VIDEO',
+                                                                   'CREATE_COMMENT', 'VIEW_COMMENT', 'UPDATE_COMMENT',
+                                                                   'CREATE_VIDEO_COMMENT', 'VIEW_VIDEO_COMMENT', 'UPDATE_VIDEO_COMMENT',
+                                                                   'VIEW_NOTIFICATION',
+                                                                   'VIEW_STATISTICS',
+                                                                   'FOLLOW_CHANNEL', 'UNFOLLOW_CHANNEL',
+                                                                   'LIKE_VIDEO', 'UNLIKE_VIDEO',
+                                                                   'LIKE_POST', 'UNLIKE_POST',
+                                                                   'VIEW_WATCH_HISTORY'
+    );
+
+-- Gán quyền cho MANAGER (role_id = 3, quyền xem là chính)
+INSERT INTO role_permissions (roleid, permissionid)
+SELECT 3, permission_id FROM permissions WHERE permission_name IN (
+                                                                   'VIEW_PROFILE', 'EDIT_PROFILE', 'VIEW_MANAGER_DASHBOARD',
+                                                                   'VIEW_POST', 'VIEW_VIDEO', 'VIEW_COMMENT',
+                                                                   'VIEW_VIDEO_COMMENT',
+                                                                   'VIEW_NOTIFICATION',
+                                                                   'VIEW_STATISTICS'
+    );
+
+
+
+INSERT INTO permissions (permission_id, created_at, description, permission_name) VALUES
+                                                                                      (5, '2025-05-01 08:00:00', 'Tạo bài viết', 'CREATE_POST'),
+                                                                                      (6, '2025-05-01 08:00:00', 'Xem bài viết', 'VIEW_POST'),
+                                                                                      (7, '2025-05-01 08:00:00', 'Sửa bài viết', 'UPDATE_POST'),
+                                                                                      (8, '2025-05-01 08:00:00', 'Xóa bài viết', 'DELETE_POST'),
+                                                                                      (9, '2025-05-01 08:00:00', 'Quản lý tất cả bài viết', 'POST_MANAGEMENT'),
+                                                                                      (10, '2025-05-01 08:00:00', 'Tạo video', 'CREATE_VIDEO'),
+                                                                                      (11, '2025-05-01 08:00:00', 'Xem video', 'VIEW_VIDEO'),
+                                                                                      (12, '2025-05-01 08:00:00', 'Sửa video', 'UPDATE_VIDEO'),
+                                                                                      (13, '2025-05-01 08:00:00', 'Xóa video', 'DELETE_VIDEO'),
+                                                                                      (14, '2025-05-01 08:00:00', 'Tạo bình luận', 'CREATE_COMMENT'),
+                                                                                      (15, '2025-05-01 08:00:00', 'Xem bình luận', 'VIEW_COMMENT'),
+                                                                                      (16, '2025-05-01 08:00:00', 'Sửa bình luận', 'UPDATE_COMMENT'),
+                                                                                      (17, '2025-05-01 08:00:00', 'Xóa bình luận', 'DELETE_COMMENT'),
+                                                                                      (18, '2025-05-01 08:00:00', 'Quản lý tất cả bình luận', 'COMMENT_MANAGEMENT');
