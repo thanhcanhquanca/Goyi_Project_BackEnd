@@ -50,6 +50,10 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'com.vladmihalcea:hibernate-types-60:2.21.1'
 
+
+    implementation 'com.google.zxing:core:3.5.1'
+    implementation 'com.google.zxing:javase:3.5.1'
+
 }
 
 

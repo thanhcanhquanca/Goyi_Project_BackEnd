@@ -13,4 +13,6 @@ public class UserDTO {
     private String email;
     private String roleName;
     private Set<String> permissions;
+    private String userCode;  // Thêm mã người dùng
+    private String qrCode;    // Thêm đường dẫn đến QR code
 }
