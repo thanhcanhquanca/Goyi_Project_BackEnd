@@ -478,39 +478,51 @@ public class UserService implements IUserService {
      * Tạo mã người dùng tự động tăng
      * Format: GY + 8 chữ số (GY00000001, GY00000002, ...)
      */
+    /**
+     * Tạo mã người dùng ngẫu nhiên chứa cả chữ và số
+     * Format: G + 7 ký tự ngẫu nhiên (chữ và số, ví dụ Gue67n01)
+     */
     private String generateAutoIncrementUserCode() {
         try {
-            // Tìm mã người dùng lớn nhất hiện tại
-            String maxUserCode = userRepository.findMaxUserCode();
+            // Tạo mã ngẫu nhiên với chữ cái và số
+            StringBuilder codeBuilder = new StringBuilder("G");
+            String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+            java.util.Random random = new java.util.Random();
 
-            int nextNumber = 1; // Mặc định bắt đầu từ 1
-
-            // Nếu đã có mã người dùng trong hệ thống
-            if (maxUserCode != null && maxUserCode.startsWith("GY")) {
-                try {
-                    // Trích xuất phần số từ mã và tăng lên 1
-                    String numberPart = maxUserCode.substring(2);
-                    nextNumber = Integer.parseInt(numberPart) + 1;
-                } catch (NumberFormatException e) {
-                    logger.warn("Cannot parse user code: {}, starting from 1", maxUserCode);
-                    nextNumber = 1;
-                }
+            // Thêm 7 ký tự ngẫu nhiên sau ký tự 'G'
+            for (int i = 0; i < 7; i++) {
+                int index = random.nextInt(characters.length());
+                codeBuilder.append(characters.charAt(index));
             }
 
-            // Định dạng thành chuỗi 8 chữ số (GY00000001, GY00000002, ...)
-            String userCode = String.format("GY%08d", nextNumber);
+            String userCode = codeBuilder.toString();
 
-            // Kiểm tra xem mã đã tồn tại chưa (cho trường hợp ngoại lệ)
-            if (userRepository.existsByUserCode(userCode)) {
-                logger.warn("User code {} already exists despite being newly generated, creating code with timestamp", userCode);
-                return "GY" + System.currentTimeMillis(); // Sử dụng timestamp nếu có trùng bất ngờ
+            // Kiểm tra xem mã đã tồn tại chưa
+            // Nếu đã tồn tại, tạo lại mã mới cho đến khi tìm được mã chưa tồn tại
+            int maxAttempts = 10; // Giới hạn số lần thử để tránh vòng lặp vô hạn
+            int attempts = 0;
+
+            while (userRepository.existsByUserCode(userCode) && attempts < maxAttempts) {
+                codeBuilder = new StringBuilder("G");
+                for (int i = 0; i < 7; i++) {
+                    int index = random.nextInt(characters.length());
+                    codeBuilder.append(characters.charAt(index));
+                }
+                userCode = codeBuilder.toString();
+                attempts++;
+            }
+
+            if (attempts >= maxAttempts) {
+                // Nếu thử quá nhiều lần, sử dụng timestamp để đảm bảo tính duy nhất
+                logger.warn("Could not generate a unique user code after {} attempts, using timestamp", maxAttempts);
+                return "G" + System.currentTimeMillis();
             }
 
             return userCode;
         } catch (Exception e) {
-            logger.error("Error generating auto-increment user code: {}", e.getMessage());
+            logger.error("Error generating user code: {}", e.getMessage());
             // Sử dụng timestamp nếu có lỗi
-            return "GY" + System.currentTimeMillis();
+            return "G" + System.currentTimeMillis();
         }
     }
 
