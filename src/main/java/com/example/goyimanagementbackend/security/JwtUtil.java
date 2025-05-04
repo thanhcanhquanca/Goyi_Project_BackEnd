@@ -55,4 +55,13 @@ public class JwtUtil {
         return (String) Jwts.parser().setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token).getBody().get("role");
     }
+
+    public Date getExpirationDateFromToken(String token) {
+        try {
+            return Jwts.parser().setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(token).getBody().getExpiration();
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new JwtException("Invalid token");
+        }
+    }
 }
