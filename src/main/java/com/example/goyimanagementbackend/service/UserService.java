@@ -192,8 +192,28 @@ public class UserService implements IUserService {
             logger.info("User {} registered successfully with role: {} and userCode: {}",
                     savedUser.getUserName(), role.getRoleName(), userCode);
 
-            // Tạo DTO với thông tin đầy đủ
-            UserDTO userDTO = toDto(savedUser);
+            // Tạo DTO với thông tin cơ bản
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUserId(savedUser.getUserId());
+            userDTO.setUserName(savedUser.getUserName());
+            userDTO.setPhoneNumber(savedUser.getPhoneNumber());
+            userDTO.setFullName(savedUser.getFullName());
+            userDTO.setEmail(savedUser.getEmail());
+            userDTO.setRoleName(role.getRoleName());
+            userDTO.setUserCode(userCode);
+            userDTO.setQrCode(qrCodePath);
+
+            // Lấy danh sách quyền từ database - CÁCH CŨ ĐÃ HOẠT ĐỘNG
+            try {
+                List<String> permissionNames = roleRepository.findPermissionNamesByRoleId(role.getRoleId());
+                Set<String> permissions = new HashSet<>(permissionNames);
+                userDTO.setPermissions(permissions);
+                logger.info("Loaded {} permissions for new user with role {}",
+                        permissions.size(), role.getRoleName());
+            } catch (Exception e) {
+                logger.error("Error loading permissions: {}", e.getMessage(), e);
+                userDTO.setPermissions(Collections.emptySet());
+            }
 
             return userDTO;
         } catch (Exception e) {
