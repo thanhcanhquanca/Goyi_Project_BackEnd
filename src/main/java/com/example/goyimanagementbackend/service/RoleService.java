@@ -1,12 +1,14 @@
 package com.example.goyimanagementbackend.service;
 
 import com.example.goyimanagementbackend.dto.RoleDTO;
+import com.example.goyimanagementbackend.entity.Permissions;
 import com.example.goyimanagementbackend.entity.Roles;
 import com.example.goyimanagementbackend.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,7 +53,14 @@ public class RoleService implements IRoleService {
         RoleDTO dto = new RoleDTO();
         dto.setRoleId(role.getRoleId());
         dto.setRoleName(role.getRoleName());
-        // Nếu có permissions thì map sang dto.setPermissions(...)
+        // Map quyền sang DTO
+        if (role.getPermissions() != null) {
+            Set<String> permissionNames = role.getPermissions()
+                    .stream()
+                    .map(Permissions::getPermissionName)
+                    .collect(Collectors.toSet());
+            dto.setPermissions(permissionNames);
+        }
         return dto;
     }
 }

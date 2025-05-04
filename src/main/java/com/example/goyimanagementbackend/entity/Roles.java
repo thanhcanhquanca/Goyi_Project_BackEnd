@@ -29,14 +29,11 @@ public class Roles {
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_permissions",
             joinColumns = @JoinColumn(name = "roleid"),
             inverseJoinColumns = @JoinColumn(name = "permissionid")
     )
-    private Set<Permissions> permissions;
-
-
+    private Set<Permissions> permissions = new HashSet<>();
 }

@@ -4,15 +4,27 @@
 INSERT INTO roles (role_name, description, created_at, updated_at) VALUES
                                                                        ('ADMIN', 'Quản trị viên hệ thống', '2025-05-01 08:00:00', '2025-05-01 08:00:00'),
                                                                        ('USER', 'Người dùng thông thường', '2025-05-01 08:00:00', '2025-05-01 08:00:00'),
-                                                                       ('CREATOR', 'Người tạo nội dung', '2025-05-01 08:00:00', '2025-05-01 08:00:00');
+                                                                       ('MANAGER', 'Người quản lý', '2025-05-01 08:00:00', '2025-05-01 08:00:00');
 
 -- 2. Chèn dữ liệu vào bảng permissions
 INSERT INTO permissions (permission_name, description, created_at) VALUES
                                                                        ('MANAGE_USERS', 'Quản lý người dùng', '2025-05-01 08:00:00'),
                                                                        ('MANAGE_VIDEOS', 'Quản lý video', '2025-05-01 08:00:00'),
                                                                        ('CREATE_ADS', 'Tạo chiến dịch quảng cáo', '2025-05-01 08:00:00'),
-                                                                       ('VIEW_REPORTS', 'Xem báo cáo', '2025-05-01 08:00:00');
-
+                                                                       ('VIEW_REPORTS', 'Xem báo cáo', '2025-05-01 08:00:00'),
+                                                                       ('CREATE_POST', 'Tạo bài viết', '2025-05-01 08:00:00'),
+                                                                       ('VIEW_POST', 'Xem bài viết', '2025-05-01 08:00:00'),
+                                                                       ('UPDATE_POST', 'Sửa bài viết', '2025-05-01 08:00:00'),
+                                                                       ('DELETE_POST', 'Xóa bài viết', '2025-05-01 08:00:00'),
+                                                                       ('POST_MANAGEMENT', 'Quản lý tất cả bài viết', '2025-05-01 08:00:00'),
+                                                                       ('CREATE_VIDEO', 'Tạo video', '2025-05-01 08:00:00'),
+                                                                       ('VIEW_VIDEO', 'Xem video', '2025-05-01 08:00:00'),
+                                                                       ('UPDATE_VIDEO', 'Sửa video', '2025-05-01 08:00:00'),
+                                                                       ('DELETE_VIDEO', 'Xóa video', '2025-05-01 08:00:00'),
+                                                                       ('CREATE_COMMENT', 'Tạo bình luận', '2025-05-01 08:00:00'),
+                                                                       ('UPDATE_COMMENT', 'Sửa bình luận', '2025-05-01 08:00:00'),
+                                                                       ('DELETE_COMMENT', 'Xóa bình luận', '2025-05-01 08:00:00'),
+                                                                       ('COMMENT_MANAGEMENT', 'Quản lý tất cả bình luận', '2025-05-01 08:00:00');
 -- 3. Chèn dữ liệu vào bảng paid_features
 INSERT INTO paid_features (feature_name, description, created_at) VALUES
                                                                       ('PREMIUM_ANALYTICS', 'Phân tích nâng cao', '2025-05-01 08:00:00'),

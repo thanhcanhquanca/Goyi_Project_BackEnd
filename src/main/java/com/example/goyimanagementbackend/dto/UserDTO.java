@@ -2,6 +2,8 @@ package com.example.goyimanagementbackend.dto;
 
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 public class UserDTO {
     private Integer userId;
@@ -10,4 +12,5 @@ public class UserDTO {
     private String fullName;
     private String email;
     private String roleName;
+    private Set<String> permissions;
 }

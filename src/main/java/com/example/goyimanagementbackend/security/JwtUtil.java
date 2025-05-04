@@ -1,7 +1,9 @@
 package com.example.goyimanagementbackend.security;
 
 import com.example.goyimanagementbackend.entity.Users;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,7 @@ public class JwtUtil {
         }
         return Jwts.builder()
                 .setSubject(user.getPhoneNumber())
-                .claim("role", user.getRole().getRoleName())
+                .claim("role", "ROLE_" + user.getRole().getRoleName())
                 .claim("userId", user.getUserId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
@@ -42,17 +44,15 @@ public class JwtUtil {
         if (!validateToken(token)) {
             throw new JwtException("Invalid or expired token");
         }
-        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token).getBody();
-        return claims.getSubject();
+        return Jwts.parser().setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token).getBody().getSubject();
     }
 
     public String getRoleFromToken(String token) {
         if (!validateToken(token)) {
             throw new JwtException("Invalid or expired token");
         }
-        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token).getBody();
-        return (String) claims.get("role");
+        return (String) Jwts.parser().setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token).getBody().get("role");
     }
 }

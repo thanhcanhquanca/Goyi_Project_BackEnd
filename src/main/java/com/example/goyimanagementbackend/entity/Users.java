@@ -4,6 +4,7 @@ import com.example.goyimanagementbackend.eNum.UserStatus; // Import enum UserSta
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "Users")
@@ -63,6 +64,7 @@ public class Users {
 
     @Column(length = 100)
     private String twoFASecret;                      // Mã bí mật cho xác thực 2 lớp
+
 
     private Integer copyrightViolations = 0;         // Số lần vi phạm bản quyền
 
