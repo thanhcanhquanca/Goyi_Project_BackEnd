@@ -623,45 +623,25 @@ public class UserService implements IUserService {
         dto.setQrCode(user.getQrCode());
 
         // Lấy danh sách quyền
-        Set<String> permissions = new HashSet<>();
-        if (user.getRole() != null) {
+        if (user.getRole() != null && user.getRole().getPermissions() != null) {
+            Set<String> permissionNames = user.getRole().getPermissions()
+                    .stream()
+                    .map(Permissions::getPermissionName)
+                    .collect(Collectors.toSet());
+            dto.setPermissions(permissionNames);
+        } else {
             try {
-                List<String> permissionNames = roleRepository.findPermissionNamesByRoleId(user.getRole().getRoleId());
-                permissions.addAll(permissionNames);
-                if (permissions.isEmpty() && "USER".equals(user.getRole().getRoleName())) {
-                    permissions = new HashSet<>(Arrays.asList(
-                            "VIEW_PROFILE", "EDIT_PROFILE", "VIEW_USER_DASHBOARD",
-                            "CREATE_POST", "VIEW_POST", "UPDATE_POST",
-                            "CREATE_VIDEO", "VIEW_VIDEO", "UPDATE_VIDEO",
-                            "CREATE_COMMENT", "VIEW_COMMENT", "UPDATE_COMMENT",
-                            "CREATE_VIDEO_COMMENT", "VIEW_VIDEO_COMMENT", "UPDATE_VIDEO_COMMENT",
-                            "VIEW_NOTIFICATION", "VIEW_STATISTICS",
-                            "FOLLOW_CHANNEL", "UNFOLLOW_CHANNEL",
-                            "LIKE_VIDEO", "UNLIKE_VIDEO",
-                            "LIKE_POST", "UNLIKE_POST",
-                            "VIEW_WATCH_HISTORY"
-                    ));
-                    logger.warn("No permissions found in database for roleId {}, using default permissions for USER", user.getRole().getRoleId());
+                if (user.getRole() != null) {
+                    List<String> permissionNames = roleRepository.findPermissionNamesByRoleId(user.getRole().getRoleId());
+                    dto.setPermissions(new HashSet<>(permissionNames));
+                } else {
+                    dto.setPermissions(Collections.emptySet());
                 }
             } catch (Exception e) {
-                logger.error("Error fetching permissions: {}, using default permissions", e.getMessage());
-                if ("USER".equals(user.getRole().getRoleName())) {
-                    permissions = new HashSet<>(Arrays.asList(
-                            "VIEW_PROFILE", "EDIT_PROFILE", "VIEW_USER_DASHBOARD",
-                            "CREATE_POST", "VIEW_POST", "UPDATE_POST",
-                            "CREATE_VIDEO", "VIEW_VIDEO", "UPDATE_VIDEO",
-                            "CREATE_COMMENT", "VIEW_COMMENT", "UPDATE_COMMENT",
-                            "CREATE_VIDEO_COMMENT", "VIEW_VIDEO_COMMENT", "UPDATE_VIDEO_COMMENT",
-                            "VIEW_NOTIFICATION", "VIEW_STATISTICS",
-                            "FOLLOW_CHANNEL", "UNFOLLOW_CHANNEL",
-                            "LIKE_VIDEO", "UNLIKE_VIDEO",
-                            "LIKE_POST", "UNLIKE_POST",
-                            "VIEW_WATCH_HISTORY"
-                    ));
-                }
+                logger.error("Error fetching permissions: {}", e.getMessage());
+                dto.setPermissions(Collections.emptySet());
             }
         }
-        dto.setPermissions(permissions);
 
         return dto;
     }

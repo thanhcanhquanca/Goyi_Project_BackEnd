@@ -17,9 +17,6 @@ public class Users {
     @Column(nullable = false, unique = true, length = 50)
     private String userName;                         // Tên đăng nhập, không được trùng
 
-    @Column(nullable = false, length = 100)
-    private String fullName;                         // Họ và tên đầy đủ
-
     @Column(nullable = false, unique = true, length = 20)
     private String phoneNumber;                      // Số điện thoại, không được trùng
 

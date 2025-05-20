@@ -25,6 +25,7 @@ INSERT INTO permissions (permission_name, description, created_at) VALUES
                                                                        ('UPDATE_COMMENT', 'Sửa bình luận', '2025-05-01 08:00:00'),
                                                                        ('DELETE_COMMENT', 'Xóa bình luận', '2025-05-01 08:00:00'),
                                                                        ('COMMENT_MANAGEMENT', 'Quản lý tất cả bình luận', '2025-05-01 08:00:00');
+
 -- 3. Chèn dữ liệu vào bảng paid_features
 INSERT INTO paid_features (feature_name, description, created_at) VALUES
                                                                       ('PREMIUM_ANALYTICS', 'Phân tích nâng cao', '2025-05-01 08:00:00'),

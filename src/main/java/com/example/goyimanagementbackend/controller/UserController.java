@@ -45,7 +45,6 @@ public class UserController {
                 Map<String, String> response = new HashMap<>();
                 response.put("userCode", user.getUserCode());
                 response.put("qrCode", user.getQrCode());
-                response.put("fullName", user.getFullName());
                 response.put("userName", user.getUserName());
 
                 return ResponseEntity.ok(response);
@@ -70,7 +69,6 @@ public class UserController {
                 // Tạo đối tượng chứa thông tin công khai của người dùng
                 Map<String, Object> publicUserInfo = new HashMap<>();
                 publicUserInfo.put("userName", user.getUserName());
-                publicUserInfo.put("fullName", user.getFullName());
                 publicUserInfo.put("userCode", user.getUserCode());
                 // Thêm các thông tin công khai khác nếu cần
 
